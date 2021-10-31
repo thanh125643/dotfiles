@@ -1,0 +1,81 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+setopt promptsubst
+setopt append_history # append rather then overwrite
+setopt extended_history # save timestamp
+setopt SHARE_HISTORY # add history immediately after typing a command
+setopt HIST_IGNORE_ALL_DUPS HIST_FIND_NO_DUPS
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000000
+export SAVEHIST=1000000000
+export HISTFILE=$HOME/.zsh_history
+
+
+# install znap
+
+[[ -f ~/Git/zsh-snap/znap.zsh ]] ||
+    git clone https://github.com/marlonrichert/zsh-snap.git ~/Git/zsh-snap
+
+source ~/Git/zsh-snap/znap.zsh
+
+#configure plugin
+zstyle ':autocomplete:*' recent-dirs zsh-z
+
+# plugin install
+znap prompt romkatv/powerlevel10k
+znap source agkozak/zsh-z
+znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+
+#plugin ohmyzsh
+znap source ohmyzsh/ohmyzsh plugins/git plugins/yarn plugins/docker-compose
+
+
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+# alias 
+
+alias upd="sudo apt update && sudo apt upgrade -y"
+alias vsch="code ~"
+
+
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/nguyen/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/nguyen/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/nguyen/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/nguyen/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+function _switch_cuda {
+   v=$1
+   export PATH=/usr/local/cuda-$v/bin:$PATH
+   export CUDADIR=/usr/local/cuda-$v
+   export LD_LIBRARY_PATH=/usr/local/cuda-$v/lib64:$LD_LIBRARY_PATH
+   nvcc --version
+}
+
+/usr/bin/keychain -q --nogui $HOME/.ssh/gitlabwsl
+source $HOME/.keychain/$HOST-sh
