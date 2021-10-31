@@ -1,0 +1,7 @@
+{{- $email := promptString "email" -}}
+{{- $name := promptString "name" -}}
+{{- $bw_session := promptString "bw_session" -}}
+[data]
+    email = {{ $email | quote }}
+	name = {{ $name | quote }}
+	BW_SESSION={{ $bw_session | quote }}
