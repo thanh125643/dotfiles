@@ -1,7 +1,11 @@
 {{- $email := promptString "email" -}}
 {{- $name := promptString "name" -}}
 {{- $bw_session := promptString "bw_session" -}}
+{{- $github_token := promptString "github token" -}}
+{{- $state:= promptString "Work or home" -}}
 [data]
     email = {{ $email | quote }}
 	name = {{ $name | quote }}
 	BW_SESSION={{ $bw_session | quote }}
+	GITHUB_TOKEN={{ $github_token | quote }}
+	state = {{ $state | quote }}

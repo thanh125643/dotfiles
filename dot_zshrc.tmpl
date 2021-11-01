@@ -51,6 +51,7 @@ alias vsch="code ~"
 
 export EDITOR="code --wait"
 export BW_SESSION="{{ .bw_session }}"
+export GITHUB_TOKEN="{{ .github_token }}"
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
@@ -77,6 +78,8 @@ function _switch_cuda {
    export LD_LIBRARY_PATH=/usr/local/cuda-$v/lib64:$LD_LIBRARY_PATH
    nvcc --version
 }
-
+{{if eq .state "home" }}
 /usr/bin/keychain -q --nogui $HOME/.ssh/gitlabwsl
 source $HOME/.keychain/$HOST-sh
+{{end}}
+
