@@ -16,6 +16,8 @@ export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
 export SAVEHIST=1000000000
 export HISTFILE=$HOME/.zsh_history
+zstyle ':autocomplete:*' min-input 1
+
 
 
 # install znap
@@ -38,7 +40,10 @@ znap source zsh-users/zsh-syntax-highlighting
 #plugin ohmyzsh
 znap source ohmyzsh/ohmyzsh plugins/git plugins/yarn plugins/docker-compose
 
-
+znap eval trapd00r/LS_COLORS "dircolors -b LS_COLORS"
+alias ls='ls --color=auto'
+znap source marlonrichert/zcolors
+znap eval zcolors "zcolors ${(q)LS_COLORS}"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -79,7 +84,6 @@ function _switch_cuda {
    nvcc --version
 }
 {{if eq .state "home" }}
-/usr/bin/keychain -q --nogui $HOME/.ssh/gitlabwsl
 source $HOME/.keychain/$HOST-sh
 {{end}}
 

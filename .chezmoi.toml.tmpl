@@ -9,3 +9,9 @@
 	BW_SESSION={{ $bw_session | quote }}
 	GITHUB_TOKEN={{ $github_token | quote }}
 	state = {{ $state | quote }}
+[diff]
+    command = "code"
+    args = ["--wait","--diff", "{{ .Destination }}", "{{ .Target }}"]
+[merge]
+    command = "nvim"
+    args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
