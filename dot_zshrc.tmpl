@@ -51,15 +51,13 @@ znap eval zcolors "zcolors ${(q)LS_COLORS}"
 
 # alias 
 
-alias upd="sudo apt update && sudo apt upgrade -y"
-alias vsch="code ~"
-
 export EDITOR="code --wait"
 export BW_SESSION="{{ .bw_session }}"
 export GITHUB_TOKEN="{{ .github_token }}"
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
